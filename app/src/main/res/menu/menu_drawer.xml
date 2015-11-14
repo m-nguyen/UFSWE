@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:title="@string/navigation_home" />
+    <item
+        android:id="@+id/navigation_aboutSWE"
+        android:title="@string/navigation_aboutSWE" />
+    <item
+        android:id="@+id/navigation_events"
+        android:title="@string/navigation_events" />
+    <item
+        android:id="@+id/navigation_officers"
+        android:title="@string/navigation_officers" />
+</menu>
