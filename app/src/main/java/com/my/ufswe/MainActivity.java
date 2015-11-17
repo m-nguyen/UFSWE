@@ -1,6 +1,5 @@
 package com.my.ufswe;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -25,26 +24,28 @@ import org.jsoup.select.Elements;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
+import com.parse.ParseAnonymousUtils;
+import com.parse.ParseUser;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Toolbar mToolbar;
     private NavigationView mDrawer;
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+    public ActionBarDrawerToggle mDrawerToggle;
     private static final String FIRST_TIME = "first_time";
     private boolean userSeeDrawer = false;
-    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.app_bar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
 
         mDrawer = (NavigationView) findViewById(R.id.main_drawer);
-        mDrawer.setNavigationItemSelectedListener(this);        // Tell tis activity is the one to handle the events
+        mDrawer.setNavigationItemSelectedListener(this);        // Tell this activity is the one to handle the events
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
                 this,                 /* host Activity */
@@ -55,27 +56,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-        if (didUserSeeDrawer() != false) {
+        if (didUserSeeDrawer()) {
+            hideDrawer();
+        } else {
             showDrawer();
             markUserSeeDrawer();
-        } else {
-            hideDrawer();
         }
 
         // Execute Title AsyncTask
         new Title().execute();
-        new SubTitle().execute();
-        new Texts().execute();
+        // new SubTitle().execute();
+        //new Texts().execute();
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        Intent intent = null;
+        Intent intent;
         // Checking which tab was selected
         if (menuItem.getItemId() == R.id.navigation_home) {
             mDrawerLayout.closeDrawer(GravityCompat.START);     // Close the drawing after clicking tab
-            intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            if (this != com.my.ufswe.MainActivity.this) {
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
             return true;
         }
         if (menuItem.getItemId() == R.id.navigation_aboutSWE) {
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             return true;
         }
+
         return false;
     }
 
@@ -114,7 +118,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id ==  R.id.action_signIn) {
+            // Determine whether the current user is an anonymous user
+            if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
+                // If user is anonymous, send the user to Login view
+                this.startActivity(new Intent(this, Login.class));
+                return true;
+            } else {
+                // If current user is NOT an anonymous user then get current user data from Parse.com
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if (currentUser != null) {
+                    // Send logged in user to homepage
+                    this.startActivity(new Intent(this, Homepage.class));
+                    return true;
+                } else {
+                    // Send user to Login view
+                    this.startActivity(new Intent(this, Login.class));
+                    return true;
+                }
+            }
+        }
+        if (id == R.id.action_signUp) {
+            this.startActivity(new Intent(this, Signup.class));
             return true;
         }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UF SWE</string>
+    <string name="app_name">SWE</string>
     <string name="app_nav0">Home</string>
     <string name="app_nav1">About SWE</string>
     <string name="app_nav2">Events</string>
@@ -11,7 +11,6 @@
     <string name="navigation_aboutSWE">About SWE</string>
     <string name="navigation_events">Events</string>
     <string name="navigation_officers">Officers</string>
-    <string name="title_activity_gbmlogin">GBM Sign In</string>
 
     <!-- Strings related to GBM sign in -->
     <string name="prompt_name">Name</string>
@@ -19,15 +18,10 @@
     <string name="action_signin">Sign in</string>
     <string name="error_field_required">This field is required</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="LoginBtn">Login</string>
+    <string name="SignupBtn">Sign Up</string>
+    <string name="LogoutBtn">Log Out</string>
+    <string name="Welcome">Welcome!</string>
 </resources>

@@ -10,7 +10,7 @@ public class GBMLoginActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gbm_login);
+        //setContentView(R.layout.activity_gbm_login);
 
         // Enable Local Datastore
   /*      Parse.enableLocalDatastore(this);
