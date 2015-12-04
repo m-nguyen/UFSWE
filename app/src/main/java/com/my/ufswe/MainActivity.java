@@ -1,5 +1,7 @@
 package com.my.ufswe;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -12,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -22,12 +25,18 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.TextView;
 
 import com.parse.ParseAnonymousUtils;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    NotificationCompat.Builder notify;
+    private static final int uniqueID = 341;
 
     private NavigationView mDrawer;
     private DrawerLayout mDrawerLayout;
@@ -40,8 +49,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+
+        //notify = new NotificationCompat.Builder(this);
+        //notify.setAutoCancel(true);     // Allow users to dismiss push notification
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
@@ -69,6 +80,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             markUserSeeDrawer();
         }
     }
+
+/*
+    public void NotificationExist(View view) {
+        //Get events happening today
+        ParseQuery<ParseObject> query = new ParseQuery("Events");
+
+
+        //Building notification
+        notify.setSmallIcon(R.mipmap.ic_launcher);
+        notify.setTicker("This is the ticker");
+        notify.setWhen(System.currentTimeMillis());
+        notify.setContentTitle("SWE Event!!");
+        notify.setContentText("Events occurring today");
+
+        //When user click the notification they go back to the main view
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notify.setContentIntent(pendingIntent);
+
+        //Build notification and issue it
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm.notify(uniqueID, notify.build());
+    }
+*/
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
