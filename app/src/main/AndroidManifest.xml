@@ -42,6 +42,9 @@
         <activity
             android:name=".Signup" >
         </activity>
+        <activity
+            android:name=".GBMLoginActivity" >
+        </activity>
     </application>
 
 </manifest>

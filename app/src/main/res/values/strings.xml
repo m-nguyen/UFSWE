@@ -4,7 +4,6 @@
     <string name="app_nav1">About SWE</string>
     <string name="app_nav2">Events</string>
     <string name="app_nav3">Officers</string>
-    <string name="action_settings">Settings</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="navigation_home">Home</string>

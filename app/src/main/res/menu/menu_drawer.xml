@@ -13,4 +13,9 @@
     <item
         android:id="@+id/navigation_officers"
         android:title="@string/navigation_officers" />
+
+    <item
+        android:id="@+id/gbm"
+        android:title="GBM check-in" />
+
 </menu>

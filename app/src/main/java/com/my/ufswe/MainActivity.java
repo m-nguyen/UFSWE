@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String FIRST_TIME = "first_time";
     private boolean userSeeDrawer = false;
 
+    boolean isGBM = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(mToolbar);
 
         mDrawer = (NavigationView) findViewById(R.id.main_drawer);
+        if (!isGBM) {
+            MenuItem item = mDrawer.getMenu().findItem(R.id.gbm);
+            item.setVisible(false);
+        }
         mDrawer.setNavigationItemSelectedListener(this);        // Tell this activity is the one to handle the events
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
@@ -62,11 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showDrawer();
             markUserSeeDrawer();
         }
-
-        // Execute Title AsyncTask
-        new Title().execute();
-        // new SubTitle().execute();
-        //new Texts().execute();
     }
 
     @Override
@@ -99,6 +100,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             return true;
         }
+        if (menuItem.getItemId() == R.id.gbm) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);     // Close the drawing after clicking tab
+            // Determine whether the current user is an anonymous user
+            if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {    // if not send to homepage
+                intent = new Intent(this, Homepage.class);
+                intent.putExtra("KEY_GBM", isGBM);
+                startActivity(intent);
+                //this.startActivity(new Intent(this, Homepage.class));
+                return true;
+            } else {
+                intent = new Intent(this, GBMLoginActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        }
 
         return false;
     }
@@ -122,24 +138,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Determine whether the current user is an anonymous user
             if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
                 // If user is anonymous, send the user to Login view
-                this.startActivity(new Intent(this, Login.class));
+                //this.startActivity(new Intent(this, Login.class));
+                Intent intent = new Intent(this, Login.class);
+                intent.putExtra("KEY_GBM", isGBM);
+                startActivity(intent);
                 return true;
             } else {
                 // If current user is NOT an anonymous user then get current user data from Parse.com
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 if (currentUser != null) {
                     // Send logged in user to homepage
-                    this.startActivity(new Intent(this, Homepage.class));
+                    Intent intent = new Intent(this, Homepage.class);
+                    intent.putExtra("KEY_GBM", isGBM);
+                    startActivity(intent);
+                    //this.startActivity(new Intent(this, Homepage.class));
                     return true;
                 } else {
                     // Send user to Login view
-                    this.startActivity(new Intent(this, Login.class));
+                    //this.startActivity(new Intent(this, Login.class));
+                    Intent intent = new Intent(this, Login.class);
+                    intent.putExtra("KEY_GBM", isGBM);
+                    startActivity(intent);
                     return true;
                 }
             }
         }
         if (id == R.id.action_signUp) {
-            this.startActivity(new Intent(this, Signup.class));
+            //this.startActivity(new Intent(this, Signup.class));
+            Intent intent = new Intent(this, Signup.class);
+            intent.putExtra("KEY_GBM", isGBM);
+            startActivity(intent);
             return true;
         }
 

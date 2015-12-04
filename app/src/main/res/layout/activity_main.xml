@@ -21,6 +21,14 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:minHeight="?attr/actionBarSize" />
 
+        <ImageView
+            android:id="@+id/sweLogo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/swelogo"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
